@@ -21,107 +21,89 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      alert("รหัสผ่านไม่ตรงกัน!");
       return;
     }
 
     setIsLoading(true);
-
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
     console.log("Registration attempt:", { username, email, password });
     setIsLoading(false);
-
     router.push("/login");
   };
 
   return (
-    <main className={`min-h-screen bg-[#f7f9f6] flex items-center justify-center p-4 ${kanit.className}`}>
-      <div className="bg-white p-8 md:p-10 rounded-[2rem] w-full max-w-[420px] shadow-sm relative border border-yellow-100/50">
+    <main className={`min-h-screen bg-[#0b0f19] flex items-center justify-center p-4 relative overflow-hidden ${kanit.className}`}>
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#149b8d]/20 blur-[120px] rounded-full pointer-events-none"></div>
 
-        <div className="absolute -top-4 -right-4 bg-[#149b8d] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg border-4 border-[#f7f9f6]">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-          </svg>
-        </div>
+      <div className="bg-[#151c2c]/80 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] w-full max-w-[420px] shadow-2xl relative border border-gray-800 z-10">
 
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#1e293b] flex items-center justify-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#1e293b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-            </svg>
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold text-white flex items-center justify-center gap-3 tracking-wide">
+            <span className="bg-[#149b8d] p-2 rounded-xl text-white shadow-[0_0_15px_rgba(20,155,141,0.5)]">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+            </span>
             สมัครสมาชิก
           </h1>
         </div>
 
-        <form onSubmit={handleRegister} className="flex flex-col gap-4">
+        <form onSubmit={handleRegister} className="flex flex-col gap-5">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
+            placeholder="ชื่อผู้ใช้"
+          />
 
-          <div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="w-full bg-white border border-[#fef08a] rounded-xl p-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
-              placeholder="ชื่อผู้ใช้"
-            />
-          </div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
+            placeholder="อีเมล"
+          />
 
-          <div>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full bg-white border border-[#fef08a] rounded-xl p-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
-              placeholder="อีเมล"
-            />
-          </div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
+            placeholder="รหัสผ่าน"
+          />
 
-          <div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-white border border-[#149b8d] rounded-xl p-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
-              placeholder="รหัสผ่าน"
-            />
-          </div>
-
-          <div>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="w-full bg-white border border-[#149b8d] rounded-xl p-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
-              placeholder="ยืนยันรหัสผ่าน"
-            />
-          </div>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
+            placeholder="ยืนยันรหัสผ่าน"
+          />
 
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full mt-4 bg-[#149b8d] hover:bg-[#118276] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+            className={`w-full mt-2 bg-gradient-to-r from-[#149b8d] to-[#0d7a6f] hover:from-[#118276] hover:to-[#0a635a] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(20,155,141,0.3)] hover:shadow-[0_4px_25px_rgba(20,155,141,0.5)] ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
           >
             {isLoading ? (
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-              </svg>
-            )}
-            {isLoading ? "กำลังสร้างบัญชี..." : "สมัครสมาชิก"}
+            ) : "สร้างบัญชีใหม่"}
           </button>
         </form>
 
-        <div className="flex flex-col items-center gap-2 text-sm mt-6">
-          <p className="text-[#8c9ca3]">
-            มีบัญชีอยู่แล้ว? <Link href="/login" className="text-[#149b8d] hover:underline font-medium">เข้าสู่ระบบ</Link>
+        <div className="flex flex-col items-center gap-2 text-sm mt-8 pt-6 border-t border-gray-800">
+          <p className="text-gray-400">
+            มีบัญชีอยู่แล้ว? <Link href="/login" className="text-[#149b8d] hover:text-[#19c7b5] hover:underline font-medium transition-colors">เข้าสู่ระบบ</Link>
           </p>
         </div>
 

@@ -1,3 +1,6 @@
+if (!process.env.NEXTAUTH_URL) {
+  process.env.NEXTAUTH_URL = "https://nexus-shop-mu.vercel.app";
+}
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "../../../../lib/prisma";

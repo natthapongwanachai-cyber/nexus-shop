@@ -18,10 +18,7 @@ const handler = NextAuth({
 
         const user = await prisma.user.findFirst({
           where: {
-            OR: [
-              { username: credentials.username },
-              { email: credentials.username }
-            ]
+            username: credentials.username
           }
         });
 

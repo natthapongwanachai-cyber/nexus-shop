@@ -24,13 +24,12 @@ export default function ForgotPasswordPage() {
 
   return (
     <main className={`min-h-screen bg-[#0b0f19] flex items-center justify-center p-4 relative overflow-hidden ${kanit.className}`}>
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#149b8d]/20 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="bg-[#151c2c]/80 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] w-full max-w-[420px] shadow-2xl relative border border-gray-800 z-10">
 
         <div className="text-center mb-8">
-          <div className="bg-[#149b8d] w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(20,155,141,0.5)] rotate-3">
+          <div className="bg-gradient-to-br from-purple-600 to-pink-500 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(168,85,247,0.5)] rotate-3">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white -rotate-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
             </svg>
@@ -48,14 +47,14 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#149b8d] focus:ring-1 focus:ring-[#149b8d] transition-all"
+              className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
               placeholder="อีเมลของคุณ"
             />
 
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full mt-2 bg-gradient-to-r from-[#149b8d] to-[#0d7a6f] hover:from-[#118276] hover:to-[#0a635a] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(20,155,141,0.3)] hover:shadow-[0_4px_25px_rgba(20,155,141,0.5)] ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`w-full mt-2 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(168,85,247,0.3)] hover:shadow-[0_4px_25px_rgba(168,85,247,0.5)] ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               {isLoading ? (
                 <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -66,15 +65,15 @@ export default function ForgotPasswordPage() {
             </button>
           </form>
         ) : (
-          <div className="text-center p-6 bg-[#0b0f19] border border-[#149b8d]/30 rounded-2xl">
-            <div className="bg-green-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <div className="text-center p-6 bg-[#0b0f19] border border-purple-500/30 rounded-2xl shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+            <div className="bg-pink-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <h3 className="font-bold text-white mb-2 tracking-wide">ส่งอีเมลสำเร็จ!</h3>
             <p className="text-sm text-gray-400 leading-relaxed">
-              เราได้ส่งลิงก์ไปที่ <span className="text-[#149b8d] font-medium">{email}</span><br/>กรุณาตรวจสอบกล่องจดหมายของคุณ
+              เราได้ส่งลิงก์ไปที่ <span className="text-purple-400 font-medium">{email}</span><br/>กรุณาตรวจสอบกล่องจดหมายของคุณ
             </p>
           </div>
         )}

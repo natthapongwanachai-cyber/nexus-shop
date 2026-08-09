@@ -1,127 +1,78 @@
-"use client";
-
-import { useState } from "react";
-import { Kanit } from "next/font/google";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-
-const kanit = Kanit({ 
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['thai', 'latin'] 
-});
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setErrorMsg("");
-    
-    const result = await signIn("credentials", {
-      redirect: false,
-      username,
-      password,
-    });
-
-    if (result?.error) {
-      setErrorMsg("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
-      setIsLoading(false);
-    } else {
-      router.push("/");
-      router.refresh(); 
-    }
-  };
-
   return (
-    <main className={`min-h-screen bg-[#0b0f19] flex items-center justify-center p-4 relative overflow-hidden ${kanit.className}`}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-
-      <div className="bg-[#151c2c]/80 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] w-full max-w-[420px] shadow-2xl relative border border-gray-800 z-10">
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
+      <div className="w-full max-w-md p-8 space-y-8 bg-[#111111] rounded-2xl border border-gray-800 shadow-2xl">
         
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-white flex items-center justify-center gap-3 tracking-wide">
-            <span className="bg-gradient-to-br from-purple-600 to-pink-500 p-2 rounded-xl text-white shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-            </span>
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-extrabold text-white tracking-wide">
             เข้าสู่ระบบ
-          </h1>
+          </h2>
         </div>
-
-        {errorMsg && (
-          <div className="mb-6 p-3 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 text-sm text-center">
-            {errorMsg}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="flex flex-col gap-5">
-          
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+        
+        <form className="mt-8 space-y-5">
+          <div className="space-y-4">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                 </svg>
+              </div>
+              <input
+                name="username"
+                type="text"
+                required
+                className="w-full pl-10 pr-4 py-3 bg-[#1a1a1a] border border-gray-800 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-500 transition-all"
+                placeholder="ชื่อผู้ใช้ หรือ อีเมล"
+              />
             </div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
-              placeholder="ชื่อผู้ใช้ หรือ อีเมล"
-            />
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
+            
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                 </svg>
+              </div>
+              <input
+                name="password"
+                type="password"
+                required
+                className="w-full pl-10 pr-4 py-3 bg-[#1a1a1a] border border-gray-800 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-500 transition-all"
+                placeholder="รหัสผ่าน"
+              />
             </div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
-              placeholder="รหัสผ่าน"
-            />
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className={`w-full mt-4 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(168,85,247,0.3)] hover:shadow-[0_4px_25px_rgba(168,85,247,0.5)] ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+            className="w-full py-3 px-4 rounded-xl text-white font-bold bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-400 hover:via-purple-400 hover:to-pink-400 transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(168,85,247,0.4)]"
           >
-            {isLoading ? (
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            ) : "เข้าสู่ระบบ"}
+            เข้าสู่ระบบ
           </button>
         </form>
 
-        <div className="flex flex-col items-center gap-4 text-sm mt-8 pt-6 border-t border-gray-800">
-          <p className="text-gray-400">
-            ยังไม่มีบัญชี? <Link href="/register" className="text-purple-400 hover:text-pink-400 hover:underline font-medium transition-colors">สมัครสมาชิก</Link>
+        <div className="flex flex-col items-center gap-3 pt-6 border-t border-gray-800">
+          <p className="text-sm text-gray-400">
+            ยังไม่มีบัญชี?{" "}
+            <Link href="/register" className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 hover:from-cyan-300 hover:to-purple-300 font-semibold transition-all">
+              สมัครสมาชิก
+            </Link>
           </p>
-          <Link href="/forgot-password" className="text-gray-500 hover:text-white font-medium flex items-center gap-1 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clipRule="evenodd" />
-            </svg>
-            ลืมรหัสผ่าน?
+          <Link href="/forgot-password" className="text-xs text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1">
+             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+             </svg>
+             ลืมรหัสผ่าน?
           </Link>
         </div>
-
+        
       </div>
-    </main>
+    </div>
   );
 }

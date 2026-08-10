@@ -9,15 +9,11 @@ export default function LoginPage() {
       <div className="relative w-full max-w-md p-10 bg-white/[0.02] backdrop-blur-2xl rounded-3xl border border-white/[0.05] shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10">
         
         <div className="flex flex-col items-center mb-10">
-          <div className="w-16 h-16 mb-6 rounded-2xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[2px] shadow-lg shadow-pink-500/30">
-            <div className="w-full h-full bg-[#0a0a0a] rounded-[14px] flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                <polyline points="10 17 15 12 10 7" />
-                <line x1="15" y1="12" x2="3" y2="12" />
-              </svg>
-            </div>
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Nexus Shop Logo" 
+            className="h-14 w-auto mb-6 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+          />
           <h2 className="text-3xl font-black text-white tracking-tight">
             WELCOME BACK
           </h2>

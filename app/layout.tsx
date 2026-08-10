@@ -1,4 +1,10 @@
-export const metadata = {
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
   title: "NEXUS SHOP",
   description: "Welcome to the Future of Digital Store",
   icons: {
@@ -13,12 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-black min-h-screen flex flex-col`}>
-        <Navbar />
-        <div className="flex-1">
-          {children}
-        </div>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

@@ -10,7 +10,7 @@ export default function LoginPage() {
         
         <div className="flex flex-col items-center mb-10">
           <img 
-            src="/logo.png" 
+            src="/nexuslogo.png" 
             alt="Nexus Shop Logo" 
             className="h-14 w-auto mb-6 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"
           />

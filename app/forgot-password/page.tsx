@@ -1,93 +1,75 @@
-"use client";
-
-import { useState } from "react";
-import { Kanit } from "next/font/google";
 import Link from "next/link";
 
-const kanit = Kanit({ 
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['thai', 'latin'] 
-});
-
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
-
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    setIsSent(true);
-  };
-
   return (
-    <main className={`min-h-screen bg-[#0b0f19] flex items-center justify-center p-4 relative overflow-hidden ${kanit.className}`}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden bg-[#050505] py-10">
+      {/* Background Glow */}
+      <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-pink-500/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="bg-[#151c2c]/80 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] w-full max-w-[420px] shadow-2xl relative border border-gray-800 z-10">
-
-        <div className="text-center mb-8">
-          <div className="bg-gradient-to-br from-purple-600 to-pink-500 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(168,85,247,0.5)] rotate-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white -rotate-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-2 tracking-wide">ลืมรหัสผ่าน</h1>
-          <p className="text-sm text-gray-400">
-            กรอกอีเมลของคุณเพื่อรับลิงก์สำหรับรีเซ็ตรหัสผ่าน
-          </p>
+      <div className="relative w-full max-w-md p-10 bg-white/[0.02] backdrop-blur-2xl rounded-3xl border border-white/[0.05] shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10">
+        
+        {/* Header Section */}
+        <div className="flex flex-col items-center mb-8">
+          <img 
+            src="/nexuslogo.png" 
+            alt="Nexus Shop Logo" 
+            className="h-14 w-auto mb-6 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+          />
+          <h2 className="text-3xl font-black text-white tracking-tight uppercase text-center">
+            Reset Password
+          </h2>
+          <p className="text-gray-500 mt-2 text-sm text-center">Enter your email to receive a reset link</p>
         </div>
 
-        {!isSent ? (
-          <form onSubmit={handleResetPassword} className="flex flex-col gap-5">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full bg-[#0b0f19] border border-gray-700 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
-              placeholder="อีเมลของคุณ"
-            />
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full mt-2 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(168,85,247,0.3)] hover:shadow-[0_4px_25px_rgba(168,85,247,0.5)] ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
-            >
-              {isLoading ? (
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              ) : "ส่งลิงก์รีเซ็ตรหัสผ่าน"}
-            </button>
-          </form>
-        ) : (
-          <div className="text-center p-6 bg-[#0b0f19] border border-purple-500/30 rounded-2xl shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-            <div className="bg-pink-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        {/* Form Section */}
+        <form className="space-y-5">
+          
+          {/* Email */}
+          <div className="group relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-purple-400 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </div>
-            <h3 className="font-bold text-white mb-2 tracking-wide">ส่งอีเมลสำเร็จ!</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              เราได้ส่งลิงก์ไปที่ <span className="text-purple-400 font-medium">{email}</span><br/>กรุณาตรวจสอบกล่องจดหมายของคุณ
-            </p>
+            <input
+              name="email"
+              type="email"
+              required
+              className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/[0.05] rounded-xl focus:bg-white/[0.05] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 text-white placeholder-gray-600 outline-none transition-all duration-300"
+              placeholder="Email Address"
+            />
           </div>
-        )}
 
-        <div className="flex flex-col items-center gap-2 text-sm mt-8 pt-6 border-t border-gray-800">
-          <Link href="/login" className="text-gray-500 hover:text-white flex items-center gap-2 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="relative w-full py-4 mt-6 rounded-xl font-bold text-white overflow-hidden group"
+          >
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-500 to-pink-500 group-hover:scale-105 transition-transform duration-300"></div>
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md"></div>
+            <span className="relative flex items-center justify-center gap-2">
+              SEND RESET LINK
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </span>
+          </button>
+        </form>
+
+        {/* Footer Link */}
+        <div className="mt-8 text-center">
+          <Link href="/login" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-cyan-400 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            กลับสู่หน้าเข้าสู่ระบบ
+            Back to Sign in
           </Link>
         </div>
-
       </div>
-    </main>
+    </div>
   );
 }

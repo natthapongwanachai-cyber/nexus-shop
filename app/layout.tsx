@@ -1,13 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Navbar from "../components/Navbar";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "GALAX STORE",
-  description: "Digital Store Platform",
+export const metadata = {
+  title: "NEXUS SHOP",
+  description: "Welcome to the Future of Digital Store",
+  icons: {
+    icon: "/nexuslogo.png",
+  },
 };
 
 export default function RootLayout({

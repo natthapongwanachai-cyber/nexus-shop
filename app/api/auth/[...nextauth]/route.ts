@@ -43,11 +43,10 @@ const authOptions = {
   session: {
     strategy: "jwt" as const,
   },
-  secret: process.env.NEXTAUTH_SECRET || "nexus_shop_super_secret_key_2026_1000000_percent_secure",
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
-  },
-  url: process.env.NEXTAUTH_URL || "https://nexus-shop-mu.vercel.app", 
+  }
 };
 
 const handler = NextAuth(authOptions);

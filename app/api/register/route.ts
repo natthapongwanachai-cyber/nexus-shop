@@ -9,12 +9,10 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { username, email, password } = body;
 
-    // 1. เช็กว่ากรอกข้อมูลมาครบไหม
     if (!username || !email || !password) {
       return NextResponse.json({ error: "กรุณากรอกข้อมูลให้ครบถ้วน" }, { status: 400 });
     }
 
-    // 2. เช็กว่า Username หรือ Email นี้มีคนใช้ไปหรือยัง
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email: email }, { username: username }],
@@ -25,10 +23,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Username หรือ Email นี้มีในระบบแล้ว" }, { status: 409 });
     }
 
-    // 3. เข้ารหัสผ่าน (Hashing) เพื่อความปลอดภัยสูงสุด
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4. บันทึกข้อมูลลงฐานข้อมูล (ต้องมี email ตรงนี้ครับ)
     const newUser = await prisma.user.create({
       data: {
         username,

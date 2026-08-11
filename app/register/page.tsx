@@ -1,6 +1,67 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    // 1. ตรวจสอบว่ารหัสผ่านตรงกันไหม
+    if (formData.password !== formData.confirmPassword) {
+      setError("รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // 2. ส่งข้อมูลไปหา API /api/register ที่เราสร้างไว้
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
+      }
+
+      // 3. ถ้าสำเร็จ ให้เด้งไปหน้า Login
+      alert("สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ");
+      router.push("/login");
+
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden bg-[#050505] py-10">
       {/* Background Glow */}
@@ -22,8 +83,15 @@ export default function RegisterPage() {
           <p className="text-gray-500 mt-2 text-sm text-center">Join Nexus Shop today</p>
         </div>
 
+        {/* แสดงข้อความ Error (ถ้ามี) */}
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-500 text-sm text-center font-semibold">
+            {error}
+          </div>
+        )}
+
         {/* Form Section */}
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           
           {/* Username */}
           <div className="group relative">
@@ -37,6 +105,8 @@ export default function RegisterPage() {
               name="username"
               type="text"
               required
+              value={formData.username}
+              onChange={handleChange}
               className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/[0.05] rounded-xl focus:bg-white/[0.05] focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 text-white placeholder-gray-600 outline-none transition-all duration-300"
               placeholder="Username"
             />
@@ -54,6 +124,8 @@ export default function RegisterPage() {
               name="email"
               type="email"
               required
+              value={formData.email}
+              onChange={handleChange}
               className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/[0.05] rounded-xl focus:bg-white/[0.05] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 text-white placeholder-gray-600 outline-none transition-all duration-300"
               placeholder="Email Address"
             />
@@ -71,6 +143,8 @@ export default function RegisterPage() {
               name="password"
               type="password"
               required
+              value={formData.password}
+              onChange={handleChange}
               className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/[0.05] rounded-xl focus:bg-white/[0.05] focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 text-white placeholder-gray-600 outline-none transition-all duration-300"
               placeholder="Password"
             />
@@ -88,6 +162,8 @@ export default function RegisterPage() {
               name="confirmPassword"
               type="password"
               required
+              value={formData.confirmPassword}
+              onChange={handleChange}
               className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/[0.05] rounded-xl focus:bg-white/[0.05] focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 text-white placeholder-gray-600 outline-none transition-all duration-300"
               placeholder="Confirm Password"
             />
@@ -96,16 +172,19 @@ export default function RegisterPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="relative w-full py-4 mt-6 rounded-xl font-bold text-white overflow-hidden group"
+            disabled={isLoading}
+            className="relative w-full py-4 mt-6 rounded-xl font-bold text-white overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-500 to-pink-500 group-hover:scale-105 transition-transform duration-300"></div>
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md"></div>
             <span className="relative flex items-center justify-center gap-2">
-              SIGN UP
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              {isLoading ? "PROCESSING..." : "SIGN UP"}
+              {!isLoading && (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              )}
             </span>
           </button>
         </form>

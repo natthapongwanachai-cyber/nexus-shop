@@ -9,12 +9,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  balance   Float    @default(0)
-  orders    Order[]
-  createdAt DateTime @default(now())
+  id                  Int       @id @default(autoincrement())
+  username            String    @unique
+  email               String    @unique
+  password            String
+  resetPasswordToken  String?   
+  resetPasswordExpire DateTime? 
+  balance             Float     @default(0)
+  orders              Order[]
+  createdAt           DateTime  @default(now())
 }
 
 model Product {
@@ -29,13 +32,13 @@ model Product {
 }
 
 model Key {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   value     String   
-  isSold    Boolean  @default(false)
+  isSold    Boolean @default(false)
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
-  orderId   Int?     @unique
-  order     Order?   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  orderId   Int?    @unique
+  order     Order?  @relation(fields: [orderId], references: [id])
 }
 
 model Order {

@@ -1,14 +1,11 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "../../../../lib/prisma";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
-// กำหนด URL สำรองเพื่อป้องกัน Vercel พังตอน Build
-if (!process.env.NEXTAUTH_URL) {
-  process.env.NEXTAUTH_URL = "https://nexus-shop-mu.vercel.app";
-}
+const prisma = new PrismaClient();
 
-const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -18,42 +15,41 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) {
-          return null;
+          throw new Error("Invalid credentials");
         }
 
-        const user = await prisma.user.findFirst({
-          where: {
-            username: credentials.username
-          }
+        const user = await prisma.user.findUnique({
+          where: { username: credentials.username }
         });
 
-        if (!user || !user.password) {
-          return null;
+        if (!user) {
+          throw new Error("Invalid credentials");
         }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
 
         if (!isPasswordValid) {
-          return null;
+          throw new Error("Invalid credentials");
         }
 
         return {
           id: user.id.toString(),
           name: user.username,
+          email: user.email,
         };
       }
     })
   ],
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "nexus_shop_super_secret_key_2026_1000000_percent_secure",
   pages: {
     signIn: "/login",
   },
-});
+  url: process.env.NEXTAUTH_URL || "https://nexus-shop-mu.vercel.app", 
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
